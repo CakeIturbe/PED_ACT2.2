@@ -1,8 +1,8 @@
 // =================================================================
 //
 // File: list.h
-// Author:
-// Date:
+// Author: DIEGO ITURBE 
+// Date: 6/DEC/2022
 //
 // =================================================================
 #ifndef DOUBLELINKEDLIST_H
@@ -11,7 +11,7 @@
 #include <string>
 #include <sstream>
 #include "exception.h"
-#include "header.h"
+#include "head.h"
 
 template <class T> class DoubleLinkedList;
 
@@ -58,6 +58,7 @@ template <class T>
 class DoubleLinkedList {
 private:
 	Node<T> *head;
+	Node<T> *tail;
 	uint 		size;
 
 public:
@@ -88,7 +89,8 @@ public:
 // Constructor. Initializes both instance variables to zero.
 // =================================================================
 template <class T>
-DoubleLinkedList<T>::DoubleLinkedList() :head(NULL), size(0) {
+DoubleLinkedList<T>::DoubleLinkedList() :head(NULL),tail(NULL), size(0) {
+
 }
 
 // =================================================================
@@ -292,9 +294,20 @@ void DoubleLinkedList<T>::push_back(T val) {
 //
 // @throws NoSuchelement, if lookingFor is not on the list.
 // =================================================================
+// _____________________________TO DO_______________________________
 template <class T>
 void DoubleLinkedList<T>::insert_before(T lookingFor, T newVal) {
-	// TO DO
+	DoubleLinkedList<T> *x;
+	x = new DoubleLinkedList<T>(newVal);
+	if (empty()) {
+		push_front(newVal);
+		return;
+	} else {
+		tail->next = x; 
+		x->previous = tail;
+		tail = x;
+	}
+	size++;
 }
 
 // =================================================================
@@ -302,9 +315,20 @@ void DoubleLinkedList<T>::insert_before(T lookingFor, T newVal) {
 //
 // @throws NoSuchelement, if lookingFor is not on the list.
 // =================================================================
+// _____________________________TO DO_______________________________
 template <class T>
 void DoubleLinkedList<T>::insert_after(T lookingFor, T newVal) {
-	// TO DO
+	DoubleLinkedList<T> *p;
+	int posicion = 0;
+	if (lookingFor < 0 || lookingFor >= size)
+		throw NoSuchElement();
+	
+	p = head;
+	while(posicion != lookingFor) {
+		p = p->next;
+		posicion++;
+	}
+	p->value = newVal;
 }
 
 // =================================================================
